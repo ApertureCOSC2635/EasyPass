@@ -34,15 +34,18 @@ removeUser($email)
         echo("Checking If DOB matches...");
         if (verifyUser($email, $magicNumber, $database) == 1){
             echo("...user successfully verified!<br>");
+            $_SESSION["login"] = $email;
         }
         else {
             echo("...user verification failed!<br>");
-            /* do something here */
+            $_SESSION["failed"] = $email;
         }
     }
     else {
       echo("Creating User... <br>");
       createUser($email, $magicNumber, $database);
+      $_SESSION["new_user"] = $email;
+      header("Location: ../index.php?page=questions.html");
     }
 
     /* if user is verified then create a session called 'login' and store
@@ -55,7 +58,6 @@ removeUser($email)
 
     function checkUser($email, $database) {
         $query = "SELECT * FROM main WHERE email = '".$email."'";
-
         if(!$result = $database->query($query)){
             die('There was an error running the query [' . $database->error . ']');
         }
@@ -68,7 +70,7 @@ removeUser($email)
           die('There was an error running the query [' . $database->error . ']');
       }
     }
-    
+
     function verifyUser($email, $magicNumber, $database) {
        $query = "SELECT * FROM main WHERE email = '".$email."'";
        if(!$result = $database->query($query)){
