@@ -1,5 +1,10 @@
 <?php
-
+	if(isset($_GET['page'])) {
+		$page = $_GET['page'];
+	}
+	else {
+		$page = 'layout/login.html';
+	}
 
 ?>
 
@@ -32,7 +37,7 @@
 	  	<div class="jumbotron">
 			<?php include 'layout/jumbotron.html' ?>
 			<div class="container">
-				<?php include 'layout/login.html'; ?>
+				<?php include $page; ?>
 			</div>
 			<div id="error-message"></div>
 		</div>
