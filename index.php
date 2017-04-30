@@ -1,9 +1,9 @@
 <?php
 	if(isset($_GET['page'])) {
-		$page = $_GET['page'];
+		$page = 'pages/'.$_GET['page'].'.php';
 	}
 	else {
-		$page = 'layout/login.html';
+		$page = 'pages/login.php';
 	}
 
 ?>
