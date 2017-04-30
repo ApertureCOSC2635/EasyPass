@@ -52,11 +52,9 @@
 	</script>
 
 	<script type="text/javascript" src="resources/js/registration.js"></script>
-
 	<script src="resources/js/datetime.min.js"></script>
-
-    <script src="resources/js/sha512.js"></script>
-    <script src="resources/js/aes.js"></script>
+  <script src="resources/js/sha512.js"></script>
+  <script src="resources/js/aes.js"></script>
 
   </body>
 </html>

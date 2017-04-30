@@ -1,4 +1,4 @@
-<table>
+
 <!--Post will send the following 3 values:
 - email
 - password
@@ -12,25 +12,38 @@ createUser($email, $dob)
 removeUser($email)
 - needs to delete the user from the users table -->
 <?php
-    $user="root";
-    $password="Zeppelin01";
-    $database="easypass";
-    mysql_connect('localhost',$user,$password);
-    @mysql_select_db($database) or die( "Unable to select database");
-    echo "Does anything work?";
-    foreach ($_POST as $key => $value) {
-        echo "<tr>";
-        echo "<td>";
-        echo $key;
-        echo "</td>";
-        echo "<td>";
-        echo $value;
-        echo "</td>";
-        echo "</tr>";
+    require_once('../resources/php/defuse-crypto.phar');
+    $user = "root";
+    $password = "Zeppelin01";
+    $database = "easypass";
+    $email = $_POST["email"];
+    $dob = $_POST["dateOfBirth"];
+
+    /* Connect to SQL Database */
+    $database = mysqli_connect('localhost',$user,$password, $database)
+      or die( "Unable to select database");
+
+    /* Construct Hash... */
+    echo("Constructing Hash...<br>");
+    $magicNumber = hash("sha256", $email.$dob);
+
+    /* Check if email exists */
+    echo("Checking User...");
+    if (checkUser($email, $database) == 1){
+        echo " ...existing user found!<br>";
+        echo("Checking If DOB matches...");
+        if (verifyUser($email, $magicNumber, $database) == 1){
+            echo("...user successfully verified!<br>");
+        }
+        else {
+            echo("...user verification failed!<br>");
+            /* do something here */
+        }
     }
-    $query = sprintf("INSERT INTO main (email) VALUES (\"%s\")", $_POST["email"] );
-    echo $query;
-    mysql_query($query);
+    else {
+      echo("Creating User... <br>");
+      createUser($email, $magicNumber, $database);
+    }
 
     /* if user is verified then create a session called 'login' and store
     their email address as the session value. $_SESSION['login'] = $email
@@ -40,21 +53,34 @@ removeUser($email)
     This page will act depending on if the previous mentioned sessions are set.
      */
 
-    function checkUser($email, $dob) {
+    function checkUser($email, $database) {
+        $query = "SELECT * FROM main WHERE email = '".$email."'";
 
+        if(!$result = $database->query($query)){
+            die('There was an error running the query [' . $database->error . ']');
+        }
+        return $result->num_rows;
     }
-    function createUser($email, $dob) {
-      echo "createUser Stub";
+
+    function createUser($email, $magicNumber, $database) {
+      $query = "INSERT INTO main (email, stored_magic) VALUES ('".$email."','".$magicNumber."')";
+      if(!$result = $database->query($query)){
+          die('There was an error running the query [' . $database->error . ']');
+      }
     }
-    function verifyUser($email, $dob) {
-       echo "verifyUser Stub";
+    
+    function verifyUser($email, $magicNumber, $database) {
+       $query = "SELECT * FROM main WHERE email = '".$email."'";
+       if(!$result = $database->query($query)){
+           die('There was an error running the query [' . $database->error . ']');
+       }
+       $row = $result->fetch_assoc();
+       return ($row['stored_magic'] == $magicNumber);
     }
 
     /* needs to delete the user from the users table  */
     function removeUser($email) {
       echo "removeUser Stub";
     }
-
-
 ?>
 </table>
