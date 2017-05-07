@@ -25,13 +25,39 @@ My advice would be to put each piece of data (site:password) into an array.
 Both helpers need to bounce back to index if $_SESSION['login'] is not set.
 -->
 
+<?php
+
+session_start();
+require_once './vendor/autoload.php';
+include_once './helpers/db.php';
+/* Connect to SQL Database */
+$database = dbConnect();
+
+$test_data=array
+  (
+  array("website"=>"facebook", "username"=>"scotty", "password"=>"Password1"),
+  array("website"=>"google", "username"=>"scott.phillips", "password"=>"my_password"),
+  array("website"=>"ebay", "username"=>"darth_scotty", "password"=>"p@ssw0rd")
+  );
+
+$test_user = 'scotty.phillips@hotmail.com';
+
+$query = "SELECT * FROM passwords WHERE email = '$test_user'";
+$result = mysqli_fetch_all($database->query($query), MYSQLI_ASSOC);
+
+?>
+
+
+
   <div class="panel panel-default">
     <div class="panel-heading">Password database for * user * </div>
     <div class="panel-body">
 
-        <form action="helpers/password.php" >
+        <form>
 
-      	<div class="input-group control-group after-add-more">
+
+
+      	<div class="input-group control-group after-add-more" style='margin-top:10px'>
           <div class='col-sm-3 no-padding'>
             <input type="text" name="website[]" class="form-control" placeholder="Website">
           </div>
@@ -47,8 +73,30 @@ Both helpers need to bounce back to index if $_SESSION['login'] is not set.
             </div>
           </div>
         </div>
+
+        <?php
+             foreach ($result as $values) {
+            echo "<div class='input-group control-group' style='margin-top:10px'>
+                 <div class='col-sm-3 no-padding'>
+                    <input type='text' name='website[]' class='form-control' value='{$values['website']}'>
+                  </div>
+                  <div class='col-sm-4 no-padding'>
+                    <input type='text' name='username[]' class='form-control' value='{$values['username']}'>
+                  </div>
+                  <div class='col-sm-4 no-padding'>
+                    <input type='text' name='password[]' class='form-control' value='{$values['password']}'>
+                  </div>
+                  <div class='col-sm-1'>
+                    <div class='input-group-btn'>
+              <button class='btn btn-danger remove' type='button'><i class='glyphicon glyphicon-minus'></i></button>
+                  </div>
+                  </div>
+                </div> ";
+             }
+        ?>
+
         <div class="row spacer">
-           <div class="col-md-12"><p><button class="btn btn-success" type="submit" role="button" id="button" >Save</button></p></div>
+           <div class="col-md-12"><p><button class="btn btn-success" role="button" id="button" >Save</button></p></div>
         </div>
         </form>
 
@@ -71,7 +119,7 @@ Both helpers need to bounce back to index if $_SESSION['login'] is not set.
             </div>
           </div>
         </div>
-
+        <div id="scottsDiv"></div>
     </div>
   </div>
 
@@ -90,4 +138,25 @@ Both helpers need to bounce back to index if $_SESSION['login'] is not set.
 
     });
 
+</script>
+
+<script>
+$(document).ready(function(){
+  $("#button").click(function(){
+      $.ajax({
+        type: "POST",
+        url: "pages/ajaxsubmit.php",
+        data: "blank",
+        cache: false,
+        success: function(result){
+            $("#scottsDiv").html(result);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+           alert(xhr.status);
+           alert(thrownError);
+        }
+      });
+    return false;
+  });
+});
 </script>
