@@ -4,9 +4,11 @@
    $num_questions = 3;
    if(isset($_SESSION['login'])) {
       $user = $_SESSION['login'];
+      $conn = dbConnect();
       $query = "SELECT q1,q2,q3 FROM user WHERE email = '$user'";
-      //$result = mysqli_function
-      for($i = 1; $i <= $num_questions; $i++) {
+      $result = mysqli_query($conn, $query);
+      $question = mysqli_fetch_array($result);
+      for($i = 0; $i < $num_questions; $i++) {
          echo '
             <div class="form-group">
                <input type="text" class="form-control" id="qf'.$i.'" name="qf'.$i.'"/ disabled value="'.$question[$i].'">

@@ -1,6 +1,6 @@
 <?php
    function dbConnect() {
-      $config = include('../db.config.php');
+      $config = include($_SERVER['DOCUMENT_ROOT'].'/easypass/db.config.php');
       $db = $config->name;
       $host = $config->host;
       $user = $config->user;

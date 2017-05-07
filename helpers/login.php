@@ -17,6 +17,7 @@ removeUser($email)
 
    $email = $_POST['email'];
    $dob = $_POST['dateOfBirth'];
+   session_start();
 
     /* Connect to SQL Database */
     $database = dbConnect();
@@ -31,7 +32,6 @@ removeUser($email)
         echo " ...existing user found!<br>";
         echo("Checking If DOB matches...");
         if (verifyUser($email, $magicNumber, $database) == 1){
-            echo("...user successfully verified!<br>");
             $_SESSION["login"] = $email;
         }
         else {
@@ -43,8 +43,8 @@ removeUser($email)
       echo("Creating User... <br>");
       createUser($email, $magicNumber, $database);
       $_SESSION["new_user"] = $email;
-      header("Location: ../index.php?page=questions.html");
     }
+    header("Location: ../index.php?page=questions");
 
     /* if user is verified then create a session called 'login' and store
     their email address as the session value. $_SESSION['login'] = $email
