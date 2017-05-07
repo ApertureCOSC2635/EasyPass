@@ -18,7 +18,7 @@ removeUser($email)
    $email = $_POST['email'];
    $dob = $_POST['dateOfBirth'];
    session_start();
-
+   session_unset();
     /* Connect to SQL Database */
     $database = dbConnect();
 
@@ -42,7 +42,7 @@ removeUser($email)
     else {
       echo("Creating User... <br>");
       createUser($email, $magicNumber, $database);
-      $_SESSION["new_user"] = $email;
+      $_SESSION["new"] = $email;
     }
     header("Location: ../index.php?page=questions");
 
