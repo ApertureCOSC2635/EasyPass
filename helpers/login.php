@@ -55,7 +55,7 @@ removeUser($email)
      */
 
     function checkUser($email, $database) {
-        $query = "SELECT * FROM main WHERE email = '".$email."'";
+        $query = "SELECT * FROM user WHERE email = '$email'";
         if(!$result = $database->query($query)){
             die('There was an error running the query [' . $database->error . ']');
         }
@@ -63,19 +63,19 @@ removeUser($email)
     }
 
     function createUser($email, $magicNumber, $database) {
-      $query = "INSERT INTO main (email, stored_magic) VALUES ('".$email."','".$magicNumber."')";
+      $query = "INSERT INTO user (email, password) VALUES ('$email','$magicNumber')";
       if(!$result = $database->query($query)){
           die('There was an error running the query [' . $database->error . ']');
       }
     }
 
     function verifyUser($email, $magicNumber, $database) {
-       $query = "SELECT * FROM main WHERE email = '".$email."'";
+       $query = "SELECT * FROM user WHERE email = '$email'";
        if(!$result = $database->query($query)){
            die('There was an error running the query [' . $database->error . ']');
        }
        $row = $result->fetch_assoc();
-       return ($row['stored_magic'] == $magicNumber);
+       return ($row['password'] == $magicNumber);
     }
 
     /* needs to delete the user from the users table  */
