@@ -40,9 +40,14 @@ body {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
 }
-.jumbotron .btn {
-  padding: 14px 24px;
-  font-size: 21px;
+
+.no-padding {
+     padding: 0 !important;
+     margin: 0 !important;
+}
+
+.spacer {
+    margin-top: 20px;
 }
 
 #error-message {
