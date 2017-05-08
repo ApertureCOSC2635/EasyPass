@@ -20,6 +20,7 @@
       </div>
    </div>
    <div class="row">
-      <div class="col-md-12"><p><button class="btn btn-lg btn-success" type="submit" role="button" id="button" >Access</button></p></div>
+      <div class="col-md-12"><p><button class="btn btn-lg btn-success" role="button" id="button" onclick="return checkForm()" >Access</button></p></div>
    </div>
+   <div id="informationArea"></div>
 </form>

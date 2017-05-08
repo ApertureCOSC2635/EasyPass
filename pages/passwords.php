@@ -26,7 +26,6 @@ Both helpers need to bounce back to index if $_SESSION['login'] is not set.
 -->
 
 <?php
-
 session_start();
 require_once './vendor/autoload.php';
 include_once './helpers/db.php';
@@ -75,7 +74,7 @@ $result = mysqli_fetch_all($database->query($query), MYSQLI_ASSOC);
         </div>
 
         <?php
-             foreach ($result as $values) {
+             foreach ($test_data as $values) {
             echo "<div class='input-group control-group' style='margin-top:10px'>
                  <div class='col-sm-3 no-padding'>
                     <input type='text' name='website[]' class='form-control' value='{$values['website']}'>
@@ -114,7 +113,7 @@ $result = mysqli_fetch_all($database->query($query), MYSQLI_ASSOC);
             </div>
             <div class='col-sm-1'>
               <div class="input-group-btn">
-                <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-minus"></i></button>
+                <button class="btn btn-danger remove" id="button" type="button"><i class="glyphicon glyphicon-minus"></i></button>
               </div>
             </div>
           </div>

@@ -1,6 +1,5 @@
 <?php
    session_start();
-
    require_once '../vendor/autoload.php';
    include_once 'db.php';
    /* Connect to SQL Database */

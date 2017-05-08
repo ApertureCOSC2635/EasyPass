@@ -1,4 +1,5 @@
-<!--Post will send the following 3 values:
+<?php
+/* -Post will send the following 3 values:
 - email
 - password
 - action
@@ -9,43 +10,32 @@ verifyUser($email, $dob)
 createUser($email, $dob)
 - insert a new user into the database. the password field in the database will just be the hash (however you did it with JS and the DOB etc?)
 removeUser($email)
-- needs to delete the user from the users table -->
-<?php
-   require_once '../vendor/autoload.php';
+- needs to delete the user from the users table --> */
    include_once 'db.php';
    //require_once('../resources/php/defuse-crypto.phar');
-
    $email = $_POST['email'];
-   $dob = $_POST['dateOfBirth'];
-   session_start();
-   session_unset();
+   $magicNumber = $_POST['magic'];
     /* Connect to SQL Database */
     $database = dbConnect();
-
     /* Construct Hash... */
-    echo("Constructing Hash...<br>");
-    $magicNumber = hash("sha256", $email.$dob);
-
-    /* Check if email exists */
-    echo("Checking User...");
+    // echo("Constructing Hash...<br>");
     if (checkUser($email, $database) == 1){
-        echo " ...existing user found!<br>";
-        echo("Checking If DOB matches...");
         if (verifyUser($email, $magicNumber, $database) == 1){
+            // echo("User can now log in.");
             $_SESSION["login"] = $email;
         }
         else {
-            echo("...user verification failed!<br>");
+            // echo("User verification failed.");
             $_SESSION["failed"] = $email;
         }
     }
     else {
-      echo("Creating User... <br>");
+      // echo("Creating User... <br>");
       createUser($email, $magicNumber, $database);
       $_SESSION["new"] = $email;
+      // echo("New user created.");
     }
-    header("Location: ../index.php?page=questions");
-
+    header("Location: ../index.php");
     /* if user is verified then create a session called 'login' and store
     their email address as the session value. $_SESSION['login'] = $email
     if user does not exist then create another session with a diff name
@@ -77,10 +67,9 @@ removeUser($email)
        $row = $result->fetch_assoc();
        return ($row['password'] == $magicNumber);
     }
-
+    
     /* needs to delete the user from the users table  */
     function removeUser($email) {
       echo "removeUser Stub";
     }
 ?>
-</table>
