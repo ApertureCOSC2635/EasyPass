@@ -61,6 +61,7 @@
 	var question_1 = "";
 	var question_2 = "";
 	var question_3 = "";
+	var jasperthecat = "";
 $("#main_area").on("click", "#button", function(){
 			  if (checkForm() == true){
 					dateOfBirth = document.getElementById('dateOfBirth2').value;
@@ -111,9 +112,36 @@ $("#main_area").on("click", "#question_button", function(){
 						var obj = jQuery.parseJSON(result);
 						$("#main_area").html(obj.html);
 						$("#informationArea").html(obj.message);
-						//$("#informationArea").html(result);
+						// $("#informationArea").html(result);
 						document.getElementById('dateOfBirth2').value = dateOfBirth;
 						document.getElementById('email').value = email;
+						document.getElementById('qf1').value = CryptoJS.AES.decrypt(question_1, dateOfBirth).toString(CryptoJS.enc.Utf8);
+						document.getElementById('qf2').value = CryptoJS.AES.decrypt(question_2, dateOfBirth).toString(CryptoJS.enc.Utf8);
+						document.getElementById('qf3').value = CryptoJS.AES.decrypt(question_3, dateOfBirth).toString(CryptoJS.enc.Utf8);
+				},
+				error: function (xhr, ajaxOptions, thrownError) {
+					 alert(xhr.status);
+					 alert(thrownError);
+				}
+			});
+	return false;
+});
+
+$("#main_area").on("click", "#answer_button", function(){
+			var answer_1 = document.getElementById('q1').value
+			var answer_2 = document.getElementById('q2').value
+			var answer_3 = document.getElementById('q3').value
+      jasperthecat = (answer_1 + answer_2 + answer_3).toLowerCase().replace(/ /g,'');
+      var percythedog = CryptoJS.SHA512(jasperthecat).toString();
+			$.ajax({
+				type: "POST",
+				url: "pages/assign_password.php",
+				data: {email: email, magic: magicNumber, hash: percythedog},
+				cache: false,
+				success: function(result){
+						var obj = jQuery.parseJSON(result);
+						$("#main_area").html(obj.html);
+						$("#informationArea").html(obj.message);
 						document.getElementById('qf1').value = CryptoJS.AES.decrypt(question_1, dateOfBirth).toString(CryptoJS.enc.Utf8);
 						document.getElementById('qf2').value = CryptoJS.AES.decrypt(question_2, dateOfBirth).toString(CryptoJS.enc.Utf8);
 						document.getElementById('qf3').value = CryptoJS.AES.decrypt(question_3, dateOfBirth).toString(CryptoJS.enc.Utf8);

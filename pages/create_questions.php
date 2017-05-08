@@ -12,8 +12,8 @@
 
    $ajaxdata['status'] = "create_answers";
    $ajaxdata['message'] = "User Questions created. $email";
-   $ajaxdata['message'] =  $status;
-$ajaxdata['html'] = displayQuestions(true, true, false, "answer_button", "Create Your Answers!");
+   //$ajaxdata['html'] = displayQuestions(true, true, false, "answer_button", "Create Your Answers!");
+   $ajaxdata['html'] = displayLogin(true, "answer_button", "Create Your Answers!", displayQuestions(true));
 echo json_encode($ajaxdata);
 
 ?>

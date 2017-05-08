@@ -48,19 +48,46 @@ function removeUser($email) {
   echo "removeUser Stub";
 }
 
-function displayQuestions($user_dob, $questions, $answers, $buttonID, $button_display) {
-  $disable_user_dob = "";
+function displayQuestions($questions = false, $answers = false) {
   $disable_answers = "";
   $disable_questions = "";
   $disable = "disabled='disabled'";
-  if ($user_dob == true) {
-    $disable_user_dob = $disable;
-  }
   if ($answers == true) {
     $disable_answers = $disable;
   }
   if ($questions == true) {
     $disable_questions  = $disable;
+  }
+  $response = "";
+  $response .= " <div class='col-sm-12' id='questions'>";
+  $response .= "     <div class='form-group'>";
+  $response .= "        <input type='text' class='form-control' $disable_questions placeholder='Enter your first question' id='qf1'/>";
+  $response .= "     </div>";
+  $response .= "     <div class='form-group'>";
+  $response .= "         <input type='text' class='form-control' $disable_answers placeholder='Answer 1' id='q1'/>";
+  $response .= "     </div>";
+  $response .= "     <div class='form-group'>";
+  $response .= "         <input type='text' class='form-control' $disable_questions placeholder='Enter your second question' id='qf2'/>";
+  $response .= "     </div>";
+  $response .= "     <div class='form-group'>";
+  $response .= "         <input type='text' class='form-control' $disable_answers placeholder='Answer 2' id='q2'/>";
+  $response .= "     </div>";
+  $response .= "     <div class='form-group'>";
+  $response .= "         <input type='text' class='form-control' $disable_questions placeholder='Enter your third question' id='qf3'/>";
+  $response .= "     </div>";
+  $response .= "     <div class='form-group'>";
+  $response .= "         <input type='text' class='form-control' $disable_answers placeholder='Answer 3' id='q3'/>";
+  $response .= "     </div>";
+  $response .= "</div>";
+  return $response;
+}
+
+
+function displayLogin($user_dob = false, $buttonID = "button", $button_display = "Access", $display_questions = "") {
+  $disable_user_dob = "";
+  $disable = "disabled='disabled'";
+  if ($user_dob == true) {
+    $disable_user_dob = $disable;
   }
   $response = "";
   $response .= "<form method='post' action='helpers/login.php'>";
@@ -83,26 +110,7 @@ function displayQuestions($user_dob, $questions, $answers, $buttonID, $button_di
   $response .= "              </div>";
   $response .= "         </div>";
   $response .= "     </div> ";
-  $response .= " <div class='col-sm-12' id='questions'>";
-  $response .= "     <div class='form-group'>";
-  $response .= "        <input type='text' class='form-control' $disable_questions placeholder='Enter your first question' id='qf1'/>";
-  $response .= "     </div>";
-  $response .= "     <div class='form-group'>";
-  $response .= "         <input type='text' class='form-control' $disable_answers placeholder='Answer 1' id='q1'/>";
-  $response .= "     </div>";
-  $response .= "     <div class='form-group'>";
-  $response .= "         <input type='text' class='form-control' $disable_questions placeholder='Enter your second question' id='qf2'/>";
-  $response .= "     </div>";
-  $response .= "     <div class='form-group'>";
-  $response .= "         <input type='text' class='form-control' $disable_answers placeholder='Answer 2' id='q2'/>";
-  $response .= "     </div>";
-  $response .= "     <div class='form-group'>";
-  $response .= "         <input type='text' class='form-control' $disable_questions placeholder='Enter your third question' id='qf3'/>";
-  $response .= "     </div>";
-  $response .= "     <div class='form-group'>";
-  $response .= "         <input type='text' class='form-control' $disable_answers placeholder='Answer 3' id='q3'/>";
-  $response .= "     </div>";
-  $response .= "</div>";
+  $response .= "$display_questions";
   $response .= "<div class='row'>";
   $response .= "    <div class='col-md-12' id='create_questions'><p><button class='btn btn-lg btn-success' role='button' id='$buttonID' >$button_display</button></p></div>";
   $response .= "</div>";
@@ -125,4 +133,13 @@ function addUserQuestions($email, $magicNumber, $questions, $database) {
       }
       return $query;
 }
+
+function addUserPassphrase($email, $magicNumber, $password, $database) {
+      $query = "UPDATE user SET passphrase = '$password' WHERE email = '$email'";
+      if(!$result = $database->query($query)){
+          die('There was an error running the query [' . $database->error . ']');
+      }
+      return $query;
+}
+
 ?>
