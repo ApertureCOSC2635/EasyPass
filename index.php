@@ -154,6 +154,47 @@ $("#main_area").on("click", "#answer_button", function(){
 	return false;
 });
 
+$("#main_area").on("click", "#response_button", function(){
+			var answer_1 = document.getElementById('q1').value
+			var answer_2 = document.getElementById('q2').value
+			var answer_3 = document.getElementById('q3').value
+      jasperthecat = (answer_1 + answer_2 + answer_3).toLowerCase().replace(/ /g,'');
+      var percythedog = CryptoJS.SHA512(jasperthecat).toString();
+			$.ajax({
+				type: "POST",
+				url: "pages/check_password.php",
+				//this could be a flaw here need to fix up the create passphrase backend to prevent an attacker changing the password...
+				data: {email: email, magic: magicNumber, hash: percythedog},
+				cache: false,
+				success: function(result){
+						var obj = jQuery.parseJSON(result);
+						if (obj.html != null) {
+							$("#main_area").html(obj.html);
+						}
+						$("#informationArea").html(obj.message);
+						document.getElementById('qf1').value = CryptoJS.AES.decrypt(question_1, dateOfBirth).toString(CryptoJS.enc.Utf8);
+						document.getElementById('qf2').value = CryptoJS.AES.decrypt(question_2, dateOfBirth).toString(CryptoJS.enc.Utf8);
+						document.getElementById('qf3').value = CryptoJS.AES.decrypt(question_3, dateOfBirth).toString(CryptoJS.enc.Utf8);
+				},
+				error: function (xhr, ajaxOptions, thrownError) {
+					 alert(xhr.status);
+					 alert(thrownError);
+				}
+			});
+	return false;
+});
+
+$("body").on("click",".add-more",function(){
+		var html = $(".copy").html();
+		$(".after-add-more").after(html);
+});
+
+$("body").on("click",".remove",function(){
+		$(this).parents(".control-group").remove();
+});
+
+
+
 </script>
 	<script src="resources/js/datetime.min.js"></script>
   <script src="resources/js/sha512.js"></script>

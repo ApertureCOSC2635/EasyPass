@@ -142,4 +142,95 @@ function addUserPassphrase($email, $magicNumber, $password, $database) {
       return $query;
 }
 
+function checkUserPassphrase($email, $magicNumber, $password, $database) {
+     $query = "SELECT * FROM user WHERE email = '$email'";
+     if(!$result = $database->query($query)){
+         die('There was an error running the query [' . $database->error . ']');
+     }
+     $row = $result->fetch_assoc();
+     return ($row['passphrase'] == $password);
+}
+
+function displayUserPasswords() {
+/* Connect to SQL Database */
+$database = dbConnect();
+
+$test_data=array
+(
+  array("website"=>"facebook", "username"=>"scotty", "password"=>"Password1"),
+  array("website"=>"google", "username"=>"scott.phillips", "password"=>"my_password"),
+  array("website"=>"ebay", "username"=>"darth_scotty", "password"=>"p@ssw0rd")
+);
+
+$response = <<<EOT
+  <div class="panel panel-default">
+  <div class="panel-heading">Password database for * user * </div>
+  <div class="panel-body">
+      <form>
+      <div class="input-group control-group after-add-more" style='margin-top:10px'>
+        <div class='col-sm-3 no-padding'>
+          <input type="text" name="website[]" class="form-control" placeholder="Website">
+        </div>
+        <div class='col-sm-4 no-padding'>
+          <input type="text" name="username[]" class="form-control" placeholder="Username">
+        </div>
+        <div class='col-sm-4 no-padding'>
+          <input type="text" name="password[]" class="form-control" placeholder="Password">
+        </div>
+        <div class='col-sm-1'>
+          <div class="input-group-btn">
+            <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i></button>
+          </div>
+        </div>
+      </div>
+EOT;
+          foreach ($test_data as $values) {
+          $response.= "<div class='input-group control-group' style='margin-top:10px'>
+               <div class='col-sm-3 no-padding'>
+                  <input type='text' name='website[]' class='form-control' value='{$values['website']}'>
+                </div>
+                <div class='col-sm-4 no-padding'>
+                  <input type='text' name='username[]' class='form-control' value='{$values['username']}'>
+                </div>
+                <div class='col-sm-4 no-padding'>
+                  <input type='text' name='password[]' class='form-control' value='{$values['password']}'>
+                </div>
+                <div class='col-sm-1'>
+                  <div class='input-group-btn'>
+            <button class='btn btn-danger remove' type='button'><i class='glyphicon glyphicon-minus'></i></button>
+                </div>
+                </div>
+              </div> ";
+
+           }
+$response .= "
+      <div class='row spacer'>
+         <div class='col-md-12'><p><button class='btn btn-success' role='button' id='button' >Save</button></p></div>
+      </div>
+      </form>
+
+      <!-- Copy Fields -->
+      <div class='copy hide'>
+        <div class='control-group input-group' style='margin-top:10px'>
+          <div class='col-sm-3 no-padding'>
+            <input type='text' name='website[]' class='form-control' placeholder='Website'>
+          </div>
+          <div class='col-sm-4 no-padding'>
+            <input type='text' name='username[]' class='form-control' placeholder='Username'>
+          </div>
+          <div class='col-sm-4 no-padding'>
+            <input type='text' name='password[]' class='form-control' placeholder='Password'>
+          </div>
+          <div class='col-sm-1'>
+            <div class='input-group-btn'>
+              <button class='btn btn-danger remove' type='button'><i class='glyphicon glyphicon-minus'></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>";
+return $response;
+}
+
 ?>

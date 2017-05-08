@@ -29,9 +29,7 @@
              $ajaxdata['status'] = "login";
              $ajaxdata['questions'] = getQuestions($email, $magicNumber, $database);
              $ajaxdata['message'] = "Authentication sucessful.";
-             //$ajaxdata['html'] = displayQuestions(true, true, false, "response_button", "Enter your answers");
              $ajaxdata['html'] = displayLogin(true, "response_button", "Access", displayQuestions(true));
-             //$ajaxdata['html'] = displayLogin(true, "response_button", "Access", "does this work??");
          }
          else {
              $_SESSION["failed"] = $email;
@@ -45,7 +43,6 @@
        $_SESSION["new"] = $email;
        $ajaxdata['status'] = "new";
        $ajaxdata['message'] = "New user created";
-       //$ajaxdata['html'] = displayQuestions(true, false, true, "question_button", "Create Your Questions!");
        $ajaxdata['html'] = displayLogin(true, "question_button", "Create Your Questions", displayQuestions(false, true));
      }
      echo json_encode($ajaxdata);
