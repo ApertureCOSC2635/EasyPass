@@ -1,6 +1,6 @@
 <?php
   require_once './vendor/autoload.php';
-  include_once './helpers/db.php';
+  include_once './helpers/functions.php';
   session_start();
 	if(isset($_GET['page'])) {
 		$page = 'pages/'.$_GET['page'].'.php';
@@ -105,7 +105,7 @@ $("#main_area").on("click", "#question_button", function(){
 			$.ajax({
 				type: "POST",
 				url: "pages/create_questions.php",
-				data: {email: email, magic: magicNumber, q1: question1, q2: question2, q3: question3},
+				data: {email: email, magic: magicNumber, q1: question_1, q2: question_2, q3: question_3},
 				cache: false,
 				success: function(result){
 						var obj = jQuery.parseJSON(result);

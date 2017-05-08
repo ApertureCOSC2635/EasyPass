@@ -1,9 +1,0 @@
-# Make a copy of this file and name it db.config.php. Git will ignore this file by default. Fill out the below array with the easy pass database credentials.
-<?php
-   return (object) array(
-      'name' => 'db name',
-      'host' => 'db host',
-      'user' => 'db user',
-      'password' => 'db password',
-   );
-?>
