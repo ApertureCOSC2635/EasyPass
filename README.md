@@ -11,7 +11,7 @@ Please use the latest version from the master
 Ubuntu 14.04,  MySQL 5.6 or later, Apache2, PHP
 
 ### Installing
-#1.	Install Lamp Stack in Ubuntu 14.04:
+# 1.	Install Lamp Stack in Ubuntu 14.04:
 
 Install apache: 
 sudo apt-get update
@@ -35,9 +35,9 @@ sudo service apache2 restart
 
 Install PHP modules as required.
 
-#2.	Copy All files to the webserver directory. 
+# 2.	Copy All files to the webserver directory. 
 
-#3.	Properly configure server:
+# 3.	Properly configure server:
 
 Edit /etc/sysctl.d/10-network-security.conf to this:
  
@@ -93,7 +93,7 @@ service apache2 restart
 
 
 
-#4.	Create the MySQL Database:
+# 4.	Create the MySQL Database:
 
 create database easypass;
 
