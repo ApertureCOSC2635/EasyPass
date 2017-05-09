@@ -159,7 +159,11 @@ $("#main_area").on("click", "#response_button", function(){
 			var answer_2 = document.getElementById('q2').value
 			var answer_3 = document.getElementById('q3').value
       jasperthecat = (answer_1 + answer_2 + answer_3).toLowerCase().replace(/ /g,'');
+      alert(jasperthecat);
       var percythedog = CryptoJS.SHA512(jasperthecat).toString();
+      var elements;
+      var processed_data;
+      var output;
 			$.ajax({
 				type: "POST",
 				url: "pages/check_password.php",
@@ -170,11 +174,16 @@ $("#main_area").on("click", "#response_button", function(){
 						var obj = jQuery.parseJSON(result);
 						if (obj.html != null) {
 							$("#main_area").html(obj.html);
+              elements = document.getElementsByClassName('user_data');
+              for(var i = 0; i < elements.length; i++) {
+                if (elements.item(i).name != "id[]"){
+                  elements.item(i).value = CryptoJS.AES.decrypt(elements.item(i).value, jasperthecat).toString(CryptoJS.enc.Utf8);
+                }
+              }
 						}
 						$("#informationArea").html(obj.message);
-						document.getElementById('qf1').value = CryptoJS.AES.decrypt(question_1, dateOfBirth).toString(CryptoJS.enc.Utf8);
-						document.getElementById('qf2').value = CryptoJS.AES.decrypt(question_2, dateOfBirth).toString(CryptoJS.enc.Utf8);
-						document.getElementById('qf3').value = CryptoJS.AES.decrypt(question_3, dateOfBirth).toString(CryptoJS.enc.Utf8);
+            // $("#informationArea").html(result);
+
 				},
 				error: function (xhr, ajaxOptions, thrownError) {
 					 alert(xhr.status);
@@ -183,6 +192,51 @@ $("#main_area").on("click", "#response_button", function(){
 			});
 	return false;
 });
+
+$("#main_area").on("click", "#save_passwords", function(){
+      var elements;
+      var num_tags = 0;
+      elements = document.getElementsByClassName('user_data');
+      for(var i = 0; i < elements.length; i++){
+           if (elements.item(i).type != "hidden" && elements.item(i).value != ''){
+             elements.item(i).value = CryptoJS.AES.encrypt(elements.item(i).value, jasperthecat).toString();
+           }
+      }
+      elements = $('form').serialize();
+      elements = elements + "&email=" + email;
+      alert(elements);
+			$.ajax({
+				type: "POST",
+				url: "pages/update_passwords.php",
+				//this could be a flaw here need to fix up the create passphrase backend to prevent an attacker changing the password...
+				data: elements,
+				cache: false,
+				success: function(result){
+          var obj = jQuery.parseJSON(result);
+           if (obj.html != null) {
+            $("#main_area").html(obj.html);
+            elements = document.getElementsByClassName('user_data');
+            for(var i = 0; i < elements.length; i++) {
+              if (elements.item(i).name != "id[]"){
+                elements.item(i).value = CryptoJS.AES.decrypt(elements.item(i).value, jasperthecat).toString(CryptoJS.enc.Utf8);
+              }
+            }
+          }
+          $("#informationArea").html(obj.message);
+          //  $("#informationArea").html(result);
+            elements = document.getElementsByClassName('user_data');
+
+				},
+				error: function (xhr, ajaxOptions, thrownError) {
+					 alert(xhr.status);
+					 alert(thrownError);
+				}
+			});
+	return false;
+});
+
+
+
 
 $("body").on("click",".add-more",function(){
 		var html = $(".copy").html();

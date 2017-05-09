@@ -9,7 +9,7 @@
    if ($status = checkUserPassphrase($email, $magicNumber, $password, $database)){
      $ajaxdata['status'] = "passphrase_accepted";
      $ajaxdata['message'] = "Passphrase accepted.";
-     $ajaxdata['html'] = displayUserPasswords();
+     $ajaxdata['html'] = displayUserPasswords($email, $magicNumber, $database);
    }
    else {
      $ajaxdata['status'] = "passphrase_failed";

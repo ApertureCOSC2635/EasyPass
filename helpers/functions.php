@@ -151,31 +151,42 @@ function checkUserPassphrase($email, $magicNumber, $password, $database) {
      return ($row['passphrase'] == $password);
 }
 
-function displayUserPasswords() {
-/* Connect to SQL Database */
-$database = dbConnect();
 
-$test_data=array
-(
-  array("website"=>"facebook", "username"=>"scotty", "password"=>"Password1"),
-  array("website"=>"google", "username"=>"scott.phillips", "password"=>"my_password"),
-  array("website"=>"ebay", "username"=>"darth_scotty", "password"=>"p@ssw0rd")
-);
+function addUserData($email, $magicNumber, $user_data, $database) {
+  $query = "SELECT * FROM passwords WHERE email = '$email'";
+  $result = mysqli_fetch_all($database->query($query), MYSQLI_ASSOC);
+
+
+  //if data is new and valid then add data
+  if ($user_data['id'] == 'new' && $user_data['username'] != '' && $user_data['password']  != '' && $user_data['website'] != '' ){
+    $query = "INSERT INTO passwords (email, website, username, password) VALUES ('$email','{$user_data['website']}', '{$user_data['username']}', '{$user_data['password']}')";
+    if(!$result = $database->query($query)){
+        die('There was an error running the query [' . $database->error . ']');
+    }
+  }
+}
+
+function displayUserPasswords($email, $magicNumber, $database) {
+/* Connect to SQL Database */
+
+$query = "SELECT * FROM passwords WHERE email = '$email'";
+$result = mysqli_fetch_all($database->query($query), MYSQLI_ASSOC);
 
 $response = <<<EOT
   <div class="panel panel-default">
   <div class="panel-heading">Password database for * user * </div>
   <div class="panel-body">
-      <form>
+      <form id='user_questions'>
       <div class="input-group control-group after-add-more" style='margin-top:10px'>
         <div class='col-sm-3 no-padding'>
-          <input type="text" name="website[]" class="form-control" placeholder="Website"/>
+          <input type="hidden" name="id[]" class='form-control user_data' value="new" />
+          <input type="text" name="website[]" class="form-control user_data" placeholder="Website"/>
         </div>
         <div class='col-sm-4 no-padding'>
-          <input type="text" name="username[]" class="form-control" placeholder="Username"/>
+          <input type="text" name="username[]" class="form-control user_data" placeholder="Username"/>
         </div>
         <div class='col-sm-4 no-padding'>
-          <input type="text" name="password[]" class="form-control" placeholder="Password"/>
+          <input type="text" name="password[]" class="form-control user_data" placeholder="Password"/>
         </div>
         <div class='col-sm-1'>
           <div class="input-group-btn">
@@ -184,16 +195,17 @@ $response = <<<EOT
         </div>
       </div>
 EOT;
-          foreach ($test_data as $values) {
+          foreach ($result as $values) {
           $response.= "<div class='input-group control-group' style='margin-top:10px'>
                <div class='col-sm-3 no-padding'>
-                  <input type='text' name='website[]' class='form-control' value='{$values['website']}'>
+               <input type='hidden' name='id[]' class='form-control user_data' value='{$values['ID']}'  />
+                  <input type='text' name='website[]' class='form-control user_data' value='{$values['website']}'>
                 </div>
                 <div class='col-sm-4 no-padding'>
-                  <input type='text' name='username[]' class='form-control' value='{$values['username']}'>
+                  <input type='text' name='username[]' class='form-control user_data' value='{$values['username']}'>
                 </div>
                 <div class='col-sm-4 no-padding'>
-                  <input type='text' name='password[]' class='form-control' value='{$values['password']}'>
+                  <input type='text' name='password[]' class='form-control user_data' value='{$values['password']}'>
                 </div>
                 <div class='col-sm-1'>
                   <div class='input-group-btn'>
@@ -205,21 +217,23 @@ EOT;
            }
 $response .= "
       <div class='row spacer'>
-         <div class='col-md-12'><p><button class='btn btn-success' role='button' id='button' >Save</button></p></div>
+         <div class='col-md-12'><p><button class='btn btn-success' role='button' id='save_passwords' >Save</button></p></div>
       </div>
+      <div id='informationArea'></div>
       </form>
 
       <!-- Copy Fields -->
       <div class='copy hide'>
         <div class='control-group input-group' style='margin-top:10px'>
-          <div class='col-sm-3 no-padding'>
-            <input type='text' name='website[]' class='form-control' placeholder='Website'>
+             <div class='col-sm-3 no-padding'>
+                <input type='hidden' name='id[]' class='form-control user_data' value='new' />
+                <input type='text' name='website[]' class='form-control user_data' value='{$values['website']}'>
+              </div>
+          <div class='col-sm-4 no-padding'>
+            <input type='text' name='username[]' class='form-control user_data' placeholder='Username'/>
           </div>
           <div class='col-sm-4 no-padding'>
-            <input type='text' name='username[]' class='form-control' placeholder='Username'>
-          </div>
-          <div class='col-sm-4 no-padding'>
-            <input type='text' name='password[]' class='form-control' placeholder='Password'>
+            <input type='text' name='password[]' class='form-control user_data' placeholder='Password'/>
           </div>
           <div class='col-sm-1'>
             <div class='input-group-btn'>
