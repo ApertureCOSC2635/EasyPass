@@ -58,7 +58,7 @@ function displayQuestions($questions = false, $answers = false) {
   if ($questions == true) {
     $disable_questions  = $disable;
   }
-  $response = "";
+  $response = "<div class='row'>";
   $response .= " <div class='col-sm-12' id='questions'>";
   $response .= "     <div class='form-group'>";
   $response .= "        <input type='text' class='form-control' $disable_questions placeholder='Enter your first question' id='qf1'/>";
@@ -79,6 +79,7 @@ function displayQuestions($questions = false, $answers = false) {
   $response .= "         <input type='text' class='form-control' $disable_answers placeholder='Answer 3' id='q3'/>";
   $response .= "     </div>";
   $response .= "</div>";
+  $response .= "</div>";
   return $response;
 }
 
@@ -91,28 +92,27 @@ function displayLogin($user_dob = false, $buttonID = "button", $button_display =
   }
   $response = "";
   $response .= "<form method='post' action='helpers/login.php'>";
-  $response .= "    <div class='row'>";
-  $response .= "        <div id='login'>";
+  $response .= "    <div class='row' id='login'>";
   $response .= "           <label for='usr'>Enter your email address and date of birth to continue:</label>";
   $response .= "               <div class='col-sm-6'>";
   $response .= "                   <div class='form-group'>";
-  $response .= "                       <input type='text' class='form-control' $disable_user_dob placeholder='Email address' id='email'>";
+  $response .= "                       <input type='text' class='form-control' $disable_user_dob placeholder='Email address' id='email'/>";
   $response .= "                   </div>";
   $response .= "               </div>";
   $response .= "               <div class='col-sm-6'>";
   $response .= "                   <div class='form-group'>";
-  $response .= "                   <div class='input-group date' id='dateOfBirth'>";
-  $response .= "                       <input type='text' placeholder='Date of Birth' $disable_user_dob class='form-control' id='dateOfBirth2' />";
-  $response .= "                       <span class='input-group-addon'>";
-  $response .= "                          <span class='glyphicon glyphicon-calendar'></span>";
-  $response .= "                       </span>";
+  $response .= "                       <div class='input-group date' id='dateOfBirth'>";
+  $response .= "                           <input type='text' placeholder='Date of Birth' $disable_user_dob class='form-control' id='dateOfBirth2' />";
+  $response .= "                           <span class='input-group-addon'>";
+  $response .= "                              <span class='glyphicon glyphicon-calendar'></span>";
+  $response .= "                           </span>";
+  $response .= "                      </div>";
   $response .= "                  </div>";
-  $response .= "              </div>";
-  $response .= "         </div>";
-  $response .= "     </div> ";
+  $response .= "              </div> ";
+  $response .= "    </div> ";
   $response .= "$display_questions";
   $response .= "<div class='row'>";
-  $response .= "    <div class='col-md-12' id='create_questions'><p><button class='btn btn-lg btn-success' role='button' id='$buttonID' >$button_display</button></p></div>";
+  $response .= "    <div class='col-md-12' id='create_questions'><button class='btn btn-lg btn-success' role='button' id='$buttonID' >$button_display</button></div>";
   $response .= "</div>";
   $response .= "<div id='informationArea'></div>";
   return $response;
@@ -169,13 +169,13 @@ $response = <<<EOT
       <form>
       <div class="input-group control-group after-add-more" style='margin-top:10px'>
         <div class='col-sm-3 no-padding'>
-          <input type="text" name="website[]" class="form-control" placeholder="Website">
+          <input type="text" name="website[]" class="form-control" placeholder="Website"/>
         </div>
         <div class='col-sm-4 no-padding'>
-          <input type="text" name="username[]" class="form-control" placeholder="Username">
+          <input type="text" name="username[]" class="form-control" placeholder="Username"/>
         </div>
         <div class='col-sm-4 no-padding'>
-          <input type="text" name="password[]" class="form-control" placeholder="Password">
+          <input type="text" name="password[]" class="form-control" placeholder="Password"/>
         </div>
         <div class='col-sm-1'>
           <div class="input-group-btn">
