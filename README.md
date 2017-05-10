@@ -40,7 +40,6 @@ Install PHP modules as required.
 
 4.	Create the MySQL Database:
 
-create database easypass;
 
 ## Test that the server is working correctly 
 
