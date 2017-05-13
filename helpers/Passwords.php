@@ -17,6 +17,13 @@
          $result = $this->database->query($query);
       }
 
+      public function destroy($id, $email) {
+         $query = "DELETE FROM password WHERE user = '$email' AND id = $id";
+         if(!$result = $this->database->query($query)){
+           die('There was an error running the query [' . $this->database->error . ']');
+       }
+      }
+
       public function getPasswords($email) {
          $query = "SELECT * FROM password WHERE user = '$email'";
          $result = $this->database->query($query);
@@ -26,6 +33,7 @@
          }
          foreach($rows as $row) {
             $passwords[] = (object) array(
+               'id' => $row['id'],
                'name' => $row['name'],
                'username' => $row['username'],
                'password' => $row['password'],

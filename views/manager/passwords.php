@@ -47,9 +47,9 @@
             <tr>
                <td>'.$p->name.'</td>
                <td>'.$p->username.'</t>
-               <td><span class="password" pw="'.$p->password.'">'.$p->password.'</span><a class="unmask" href=""><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
+               <td><span class="password" pw="'.$p->password.'" style="margin-right: 5px;">'.$p->password.'</span><a class="unmask" href=""><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
                <td>'.$p->notes.'</td>
-               <td></td>
+               <td num="'.$p->id.'"><a class="edit" href="" style="margin-right: 5px;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a><a class="remove" href=""><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
             </tr>
             ';
          }
@@ -64,7 +64,7 @@
 
    $(document).on('click', 'a.unmask', function() {
       $(this).children(":first").attr('class', 'glyphicon glyphicon-eye-close');
-      $(this).attr('class', 'mask1');
+      $(this).attr('class', 'mask');
       var el = $(this).parent().children(":first");
       var pw = $(el).attr('pw');
       $(el).unmask();
@@ -73,12 +73,24 @@
       return false;
    });
 
-   $(document).on('click', 'a.mask1', function() {
+   $(document).on('click', 'a.mask', function() {
       $(this).children(":first").attr('class', 'glyphicon glyphicon-eye-open');
       $(this).attr('class', 'unmask');
       var el = $(this).parent().children(":first");
       $(el).attr('class', 'password');
       return false;
+   });
+
+   $(document).on('click', 'a.remove', function() {
+      var id = $(this).parent().attr('num');
+      $.ajax({
+         type: "POST",
+         data: {password: id},
+         url: "helpers/postpasswordremove.php",
+         success: function(data){
+            console.log(data);
+         }
+      });
    });
 
    function maskAll() {

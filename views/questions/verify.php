@@ -1,7 +1,8 @@
 <?php
    use Helpers\Questions;
 
-   $questions = Questions::getQuestions($_SESSION['login']);
+   $q = new Questions;
+   $questions = $q->getQuestions($_SESSION['login']);
  ?>
 <form method="post" action="helpers/postquestions.php">
    <div id="questions">

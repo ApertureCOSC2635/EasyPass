@@ -18,7 +18,7 @@
          $result = $this->database->query($query);
          if($result->num_rows != 0) {
             $row = $result->fetch_assoc();
-            if$(row['q1'] == NULL) {
+            if(row['q1'] == NULL) {
                $_SESSION['new'] = $email;
                return NULL;
             }
