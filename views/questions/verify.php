@@ -29,3 +29,11 @@
       <div class="col-md-12"><p><button class="btn btn-success" type="submit" role="button" id="button" >Access</button></p></div>
    </div>
 </form>
+<div id="error-message">
+   <?php
+      if(isset($_SESSION['error'])) {
+         echo $_SESSION['error'];
+         unset($_SESSION['error']);
+      }
+    ?>
+</div>
