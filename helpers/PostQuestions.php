@@ -1,8 +1,8 @@
 <?php
    namespace Helpers;
-   include_once($_SERVER['DOCUMENT_ROOT'].'/easypass/autoload.php');
+   include_once($_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php');
 
-   use helpers\Questions;
+   use Helpers\Questions;
 
    class PostQuestions {
 
@@ -43,7 +43,7 @@
                $_SESSION['error'] == "Answers are incorrect";
             }
          }
-         header('Location: /easypass');
+         header('Location: /');
       }
 
    }

@@ -1,8 +1,8 @@
 <?php
    namespace Helpers;
-   include_once($_SERVER['DOCUMENT_ROOT'].'/easypass/autoload.php');
+   include_once($_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php');
 
-   use helpers\Login;
+   use Helpers\Login;
 
    class PostLogin {
 
@@ -38,7 +38,7 @@
             $_SESSION['new'] = $this->email;
          }
          // Return to the application
-         header('Location: /easypass');
+         header('Location: /');
       }
 
    }

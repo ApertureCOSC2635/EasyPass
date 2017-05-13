@@ -3,7 +3,7 @@
    $p = new Passwords;
    $passwords = $p->getPasswords($_SESSION['login']);
  ?>
-<form method="post" action="helpers/postpassword.php" class="row hidden">
+<form method="post" action="helpers/PostPassword.php" class="row hidden">
    <div class="col-md-11">
       <h4>Add a new password or private data.</h4>
    </div>
@@ -42,6 +42,7 @@
    </thead>
    <tbody>
       <?php
+	if(isset($passwords)) {
          foreach($passwords as $p) {
             echo '
             <tr>
@@ -53,6 +54,7 @@
             </tr>
             ';
          }
+	}
       ?>
    </tbody>
 </table>
@@ -86,7 +88,7 @@
       $.ajax({
          type: "POST",
          data: {password: id},
-         url: "helpers/postpasswordremove.php",
+         url: "helpers/PostPasswordRemove.php",
          success: function(data){
             console.log(data);
          }

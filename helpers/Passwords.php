@@ -31,16 +31,18 @@
          {
             $rows[] = $row;
          }
+	 if(isset($rows)) {
          foreach($rows as $row) {
             $passwords[] = (object) array(
                'id' => $row['id'],
                'name' => $row['name'],
                'username' => $row['username'],
                'password' => $row['password'],
-               'notes' => $row['notes'],
-            );
-         }
-         return $passwords;
+               	'notes' => $row['notes'],
+            	);
+         	}
+         	return $passwords;
+	 }
       }
 
    }

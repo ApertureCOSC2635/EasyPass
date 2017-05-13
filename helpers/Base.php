@@ -4,7 +4,7 @@
    class Base {
 
       public function config($file) {
-         $ROOT_DIR = $_SERVER['DOCUMENT_ROOT'].'/easypass/';
+         $ROOT_DIR = $_SERVER['DOCUMENT_ROOT'].'/';
          $config = include($ROOT_DIR.$file.'.config');
          return $config;
       }

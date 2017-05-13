@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	include_once(dirname(__FILE__).'/autoload.php');
+	include_once(dirname(__FILE__).'/vendor/autoload.php');
 	if(isset($_SESSION['success'])) {
 		$_SESSION['page'] = 'views/manager/passwords.php';
 	}

@@ -10,7 +10,7 @@
                   '.$_SESSION['login'].' <span class="caret"></span>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="helpers/logout.php">Logout</a></li>
+                  <li><a href="helpers/Logout.php">Logout</a></li>
                </ul>
             </li>
             ';

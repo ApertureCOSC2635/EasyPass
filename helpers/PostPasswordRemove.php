@@ -1,8 +1,8 @@
 <?php
    namespace Helpers;
-   include_once($_SERVER['DOCUMENT_ROOT'].'/easypass/autoload.php');
+   include_once($_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php');
 
-   use helpers\Passwords;
+   use Helpers\Passwords;
 
    class PostPasswordRemove {
 

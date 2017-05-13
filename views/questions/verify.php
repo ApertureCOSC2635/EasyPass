@@ -4,7 +4,7 @@
    $q = new Questions;
    $questions = $q->getQuestions($_SESSION['login']);
  ?>
-<form method="post" action="helpers/postquestions.php">
+<form method="post" action="helpers/PostQuestions.php">
    <div id="questions">
       <div class="form-group">
          <input type="text" class="form-control" id="qf1" name="qf1"/ disabled value="<?= $questions->q1 ?>">

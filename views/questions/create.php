@@ -1,4 +1,4 @@
-<form method="post" action="helpers/postquestions.php">
+<form method="post" action="helpers/PostQuestions.php">
    <div id="questions">
       <p>A new account has been created. Please set 3 questions below.</p>
             <div class="form-group">

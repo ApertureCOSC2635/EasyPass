@@ -4,7 +4,7 @@
    Instead, we secure your data with information that is easy for you to remember. You are in control.
    All you have to do is set three easy questions, set your answers and you are ready. </p>
    <div class="container">
-      <form method="post" action="helpers/postlogin.php">
+      <form method="post" action="helpers/PostLogin.php">
          <div class="row">
             <div id="login">
                <label for="usr">Enter your email address and date of birth to continue:</label>
