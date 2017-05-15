@@ -27,7 +27,7 @@
    <div class="pull-right"><p><button class="btn btn-success" type="submit" role="button" id="button" >Save</button></p></div>
 </form>
 
-<form method="post" id="update_password" action="helpers/UpdatePassword.php" class="row hidden">
+<form method="post" id="update_form" action="helpers/UpdatePassword.php" class="row hidden">
    <div class="col-md-11">
       <h4>Update existing password or private data.</h4>
    </div>
@@ -114,6 +114,7 @@
       $('#update_name').val($.trim($(this).parent().siblings('#name').text()));
       $('#update_username').val($.trim($(this).parent().siblings('#username').text()));
       $('#update_notes').val($.trim($(this).parent().siblings('#notes').text()));
+      $('#update_password').val($.trim($(this).parent().siblings('#password').children('.password').attr('pw')));
       updateForm()
       return false;
    });
@@ -135,12 +136,12 @@
    }
 
    function updateForm() {
-      $('#update_password').attr('class', 'row');
+      $('#update_form').attr('class', 'row');
       $('#new_password').attr('class', 'row hidden');
    }
 
    function showForm() {
-      $('#update_password').attr('class', 'row hidden');
+      $('#update_form').attr('class', 'row hidden');
       $('#new_password').attr('class', 'row');
    }
 
