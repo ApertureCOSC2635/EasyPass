@@ -1,19 +1,26 @@
 <?php
    namespace Helpers;
-
+   include_once($_SERVER['DOCUMENT_ROOT'].'/vendor/phpcrypt/phpCrypt.php');
+   use PHP_Crypt\PHP_Crypt as PHP_Crypt;
    class Passwords extends Base {
 
       protected $config;
       protected $database;
+      protected $secret_key;
 
       // The constructor sets the config variable which reads the database config from a file.
       public function __construct() {
          $this->config = Base::config('db');
          $this->database = Base::dbConnect($this->config);
+         $this->secret_key = "MyTopSecretSuperKey";
       }
 
       public function create($fields, $email) {
-         $query = "INSERT INTO password (name, username, password, notes, user) VALUES ('$fields->name', '$fields->username', '$fields->password', '$fields->notes', '$email')";
+         $crypt = new PHP_Crypt($this->secret_key, PHP_Crypt::CIPHER_AES_128, PHP_Crypt::MODE_CBC, PHP_Crypt::PAD_PKCS7);
+         $iv = $crypt->createIV();
+         $encrypt_username = $crypt->encrypt($fields->username);
+         $encrpyt_password = $crypt->encrypt($fields->password);
+         $query = "INSERT INTO password (name, username, password, iv, notes, user) VALUES ('$fields->name', '$encrypt_username', '$encrpyt_password', '$iv', '$fields->notes', '$email')";
          $result = $this->database->query($query);
       }
 
@@ -33,11 +40,15 @@
          }
 	 if(isset($rows)) {
          foreach($rows as $row) {
+            $crypt = new PHP_Crypt($this->secret_key, PHP_Crypt::CIPHER_AES_128, PHP_Crypt::MODE_CBC, PHP_Crypt::PAD_PKCS7);
+            $crypt->IV($row['IV']);
+            $username = $crypt->decrypt($row['username']);
+            $password = $crypt->decrypt($row['password']);
             $passwords[] = (object) array(
                'id' => $row['id'],
                'name' => $row['name'],
-               'username' => $row['username'],
-               'password' => $row['password'],
+               'username' => $username,
+               'password' => $password,
                	'notes' => $row['notes'],
             	);
          	}
