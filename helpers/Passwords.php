@@ -1,7 +1,6 @@
 <?php
    namespace Helpers;
-   include_once($_SERVER['DOCUMENT_ROOT'].'/vendor/phpcrypt/phpCrypt.php');
-   use PHP_Crypt\PHP_Crypt as PHP_Crypt;
+   
    class Passwords extends Base {
 
       protected $config;
@@ -12,14 +11,17 @@
       public function __construct() {
          $this->config = Base::config('db');
          $this->database = Base::dbConnect($this->config);
-         $this->secret_key = $_SESSION['password'];
+         $this->secret_key = hash('sha256' ,$_SESSION['password']);
       }
 
       public function create($fields, $email) {
-         $crypt = new PHP_Crypt($this->secret_key, PHP_Crypt::CIPHER_AES_128, PHP_Crypt::MODE_CBC, PHP_Crypt::PAD_PKCS7);
-         $iv = $crypt->createIV();
-         $encrypt_username = $crypt->encrypt($fields->username);
-         $encrpyt_password = $crypt->encrypt($fields->password);
+         $iv = openssl_random_pseudo_bytes(16);
+         if($fields->username != "" ){
+           $encrypt_username = openssl_encrypt($fields->username, 'aes-256-ctr', $this->secret_key, 0, $iv);
+         }
+         if($fields->username != "" ){
+           $encrpyt_password = openssl_encrypt($fields->password, 'aes-256-ctr', $this->secret_key, 0, $iv);
+         }
          $query = "INSERT INTO password (name, username, password, iv, notes, user) VALUES ('$fields->name', '$encrypt_username', '$encrpyt_password', '$iv', '$fields->notes', '$email')";
          $result = $this->database->query($query);
       }
@@ -40,10 +42,15 @@
          }
 	 if(isset($rows)) {
          foreach($rows as $row) {
-            $crypt = new PHP_Crypt($this->secret_key, PHP_Crypt::CIPHER_AES_128, PHP_Crypt::MODE_CBC, PHP_Crypt::PAD_PKCS7);
-            $crypt->IV($row['IV']);
-            $username = $crypt->decrypt($row['username']);
-            $password = $crypt->decrypt($row['password']);
+            $iv = $row['IV'];
+            $username = "";
+            $password = "";
+            if($row['username'] != ""){
+                 $username = openssl_decrypt($row['username'], 'aes-256-ctr', $this->secret_key, 0, $iv);
+            }
+            if($row['password'] != ""){
+                $password = openssl_decrypt($row['password'], 'aes-256-ctr', $this->secret_key, 0, $iv);
+            }
             $passwords[] = (object) array(
                'id' => $row['id'],
                'name' => $row['name'],
