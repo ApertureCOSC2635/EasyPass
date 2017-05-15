@@ -136,9 +136,11 @@
 
    function updateForm() {
       $('#update_password').attr('class', 'row');
+      $('#new_password').attr('class', 'row hidden');
    }
 
    function showForm() {
+      $('#update_password').attr('class', 'row hidden');
       $('#new_password').attr('class', 'row');
    }
 
