@@ -12,7 +12,7 @@
       public function __construct() {
          $this->config = Base::config('db');
          $this->database = Base::dbConnect($this->config);
-         $this->secret_key = "MyTopSecretSuperKey";
+         $this->secret_key = $_SESSION['password'];
       }
 
       public function create($fields, $email) {

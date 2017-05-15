@@ -32,12 +32,14 @@
             $q->create($questions, $answers, $_SESSION['new']);
             $_SESSION['login'] = $_SESSION['new'];
             $_SESSION['success'] = true;
+            $_SESSION['password'] = $this->a1.$this->a2.$this->a3;
             unset($_SESSION['new']);
          }
          else if(isset($_SESSION['login'])) {
             $result = $q->verify($answers, $_SESSION['login']);
             if($result == true) {
                $_SESSION['success'] = true;
+               $_SESSION['password'] = $this->a1.$this->a2.$this->a3;
             }
             else if($result == false) {
                $_SESSION['error'] == "Answers are incorrect";
