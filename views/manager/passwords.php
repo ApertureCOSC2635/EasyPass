@@ -110,10 +110,10 @@
 
    $(document).on('click', 'a.edit', function() {
       // alert ("somehow we need to edit " + $(this).parent().attr('num'));
-      $('#update_id').val($(this).parent().attr('num'));
-      $('#update_name').val($(this).parent().siblings('#name').text());
-      $('#update_username').val($(this).parent().siblings('#username').text());
-      $('#update_notes').val($(this).parent().siblings('#notes').text());
+      $('#update_id').val($.trim($(this).parent().attr('num')));
+      $('#update_name').val($.trim($(this).parent().siblings('#name').text()));
+      $('#update_username').val($.trim($(this).parent().siblings('#username').text()));
+      $('#update_notes').val($.trim($(this).parent().siblings('#notes').text()));
       updateForm()
       return false;
    });
