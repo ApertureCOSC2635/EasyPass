@@ -21,8 +21,13 @@
             </div>
          </div>
          <div class="row">
-            <div class="col-md-12"><p><button class="btn btn-success" type="submit" role="button" id="button" >Access</button></p></div>
+            <div class="col-sm-8 g-recaptcha" data-sitekey="6LfHuCEUAAAAANWkAHkjGbSDXhJvnn454_qrpsRX"></div>
+            <div class="col-sm-2"><p><button class="btn btn-success" type="submit" role="button" id="button" >Access</button></p></div>
          </div>
+
+      <div class="row">
+
+      </div>
       </form>
    </div>
    <div id="error-message">
