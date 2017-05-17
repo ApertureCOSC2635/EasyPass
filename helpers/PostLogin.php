@@ -51,6 +51,7 @@
             $result = $login->verify($magic, $this->email);
             if($result == true) {
                $_SESSION['login'] = $this->email;
+               $_SESSION['mobile'] = $this->mobile;
                $_SESSION['sms'] = bin2hex(openssl_random_pseudo_bytes('4'));
                $message = "Your SMS code is ".$_SESSION['sms'];
                $sms = new TelstraSMS($this->TELSTRA_KEY, $this->TELSTRA_SECRET, $this->mobile, $message);
@@ -68,6 +69,7 @@
             $sms = new TelstraSMS($this->TELSTRA_KEY, $this->TELSTRA_SECRET, $this->mobile, $message);
             $sms->send();
             $_SESSION['new'] = $this->email;
+            $_SESSION['mobile'] = $this->mobile;
          }
          // Return to the application
          header('Location: /');
