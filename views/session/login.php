@@ -7,7 +7,7 @@
       <form method="post" action="helpers/PostLogin.php">
          <div class="row">
             <div id="login">
-               <label for="usr">Enter your email address and date of birth to continue:</label>
+               <label for="usr">Enter your email address and mobile phone number to continue:</label>
                <div class='col-sm-6'>
                   <div class="form-group">
                      <input type="text" class="form-control" placeholder="Email address" id="email" name="email">
@@ -15,12 +15,7 @@
                </div>
                <div class='col-sm-6'>
                   <div class="form-group">
-                     <div class='input-group date' id='dateOfBirth'>
-                        <input type='text' placeholder="Date of Birth" class="form-control" id='dateOfBirth2' name='dateOfBirth' />
-                        <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                     </div>
+                        <input type='text' placeholder="Mobile number eg 0412345678" class="form-control" id='mobile' name='mobile' />
                </div>
                </div>
             </div>
@@ -39,10 +34,3 @@
        ?>
    </div>
 </div>
-<script type="text/javascript">
-   $(function () {
-      $('#dateOfBirth').datetimepicker({
-         format: 'DD/MM/YYYY'
-      });
-   });
-</script>

@@ -26,6 +26,12 @@
       </div>
    </div>
    <div class="row">
+      <div class="col-md-6"><p>Enter the SMS code sent to your mobile phone:</p></div>
+      <div class="col-md-6">
+         <input type="text" class="form-control" placeholder="SMS code" id="smscode" name="smscode"/>
+      </div>
+   </div>
+   <div class="row">
       <div class="col-md-12"><p><button class="btn btn-success" type="submit" role="button" id="button" >Access</button></p></div>
    </div>
 </form>

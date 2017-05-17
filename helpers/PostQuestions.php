@@ -12,6 +12,7 @@
       protected $a1;
       protected $a2;
       protected $a3;
+      protected $sms_response;
 
       public function __construct() {
          // Collect the posted data and store it as variables in the class.
@@ -21,13 +22,17 @@
          $this->a1 = $_POST['q1'];
          $this->a2 = $_POST['q2'];
          $this->a3 = $_POST['q3'];
+         $this->sms_response = $_POST['smscode'];
       }
 
       public function checkQuestions() {
          session_start();
          $q = new Questions;
          $answers = array(hash("sha256", $this->a1),hash("sha256", $this->a2),hash("sha256", $this->a3));
-         if(isset($_SESSION['new'])) {
+         if(!$this->validateSMS()) {
+           $_SESSION['error'] = "Error: SMS code is incorrect";
+         }
+         else if(isset($_SESSION['new'])) {
             $questions = array($this->q1,$this->q2,$this->q3);
             $q->create($questions, $answers, $_SESSION['new']);
             $_SESSION['login'] = $_SESSION['new'];
@@ -47,8 +52,17 @@
          }
          header('Location: /');
       }
-
+      private function validateSMS() {
+         if(isset($_SESSION['sms'])) {
+            if($_SESSION['sms'] == $this->sms_response) {
+              return true;
+            }
+            return false;
+         }
+         return false;
+      }
    }
+
 
    $post = new PostQuestions;
    $post->checkQuestions();
