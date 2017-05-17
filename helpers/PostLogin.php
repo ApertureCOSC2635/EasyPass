@@ -10,8 +10,9 @@
 
       protected $email;
       protected $mobile;
-      protected $CONSUMER_KEY="VvIuayZTnz0t78rbfZMqRhuilXSYR8x4";
-      protected $CONSUMER_SECRET="xV269g1hCyfmzddq";
+      protected $TELSTRA_KEY="VvIuayZTnz0t78rbfZMqRhuilXSYR8x4";
+      protected $TELSTRA_SECRET="xV269g1hCyfmzddq";
+      protected $RECAPCHA_PRIVATE_KEY="6LfHuCEUAAAAAPk4xweLFrkF9yUhTOkH61hbqv4I";
 
       public function __construct() {
          // Collect the posted data and store it as variables in the class.
@@ -21,10 +22,15 @@
 
       public function checkUser() {
          session_start();
+         if (!$this->isRecapchaValid() != false) {
+           $_SESSION['error'] = "The reCAPTCHA wasn't entered correctly. Go back and try it again. Are you a Robot?";
+                header('Location: /');
+                return;
+         }
          $emailRegexp = "/^[a-zA-Z0-9_.-]+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/";
          // Validate Email address
          if (preg_match($emailRegexp, $this->email) == false) {
-             $_SESSION['error'] = "Invalid email address.".$this->CONSUMER_KEY;
+             $_SESSION['error'] = "Invalid email address.";
              header('Location: /');
              return;
          }
@@ -47,7 +53,7 @@
                $_SESSION['login'] = $this->email;
                $_SESSION['sms'] = bin2hex(openssl_random_pseudo_bytes('4'));
                $message = "Your SMS code is ".$_SESSION['sms'];
-               $sms = new TelstraSMS($this->CONSUMER_KEY, $this->CONSUMER_SECRET, $this->mobile, $message);
+               $sms = new TelstraSMS($this->TELSTRA_KEY, $this->TELSTRA_SECRET, $this->mobile, $message);
                $sms->send();
             }
             else if ($result == false) {
@@ -59,12 +65,38 @@
             $login->create($magic, $this->email);
             $_SESSION['sms'] = bin2hex(openssl_random_pseudo_bytes('4'));
             $message = "Your SMS code is ".$_SESSION['sms'];
-            $sms = new TelstraSMS($this->CONSUMER_KEY, $this->CONSUMER_SECRET, $this->mobile, $message);
+            $sms = new TelstraSMS($this->TELSTRA_KEY, $this->TELSTRA_SECRET, $this->mobile, $message);
             $sms->send();
             $_SESSION['new'] = $this->email;
          }
          // Return to the application
          header('Location: /');
+      }
+
+      private function isRecapchaValid()
+      {
+          try {
+
+              $url = 'https://www.google.com/recaptcha/api/siteverify';
+              $data = ['secret'   => $this->RECAPCHA_PRIVATE_KEY,
+                       'response' => $_POST['g-recaptcha-response'],
+                       'remoteip' => $_SERVER['REMOTE_ADDR']];
+
+              $options = [
+                  'http' => [
+                      'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                      'method'  => 'POST',
+                      'content' => http_build_query($data)
+                  ]
+              ];
+
+              $context  = stream_context_create($options);
+              $result = file_get_contents($url, false, $context);
+              return json_decode($result)->success;
+          }
+          catch (Exception $e) {
+              return null;
+          }
       }
 
    }
