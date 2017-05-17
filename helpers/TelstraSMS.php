@@ -1,4 +1,10 @@
 <?php
+
+// TelstraSMS-PHP Wrapper
+// This is the original work of Zach de Koning (Melbourne, Australia) - Last update 9 July 2016.
+// Original source code is at https://github.com/Zachoz/TelstraSMS-PHP
+// There was no licence details avaiable, so presumably the code is in the public domain.
+
 class TelstraSMS
 {
     private $appKey = "", $appSecret = "", $recipient = "", $message = "", $accessToken = "", $messageId = "";
