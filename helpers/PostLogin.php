@@ -73,6 +73,8 @@
          header('Location: /');
       }
 
+      // This function is the original work of 'Levit' (June 10, 2015)
+      // http://stackoverflow.com/users/1680919/levit
       private function isRecapchaValid()
       {
           try {
