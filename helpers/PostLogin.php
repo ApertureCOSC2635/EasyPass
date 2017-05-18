@@ -77,7 +77,7 @@
 
       // This function is the original work of 'Levit' (June 10, 2015)
       // http://stackoverflow.com/users/1680919/levit
-      // This code is licenced under the terms of the MIT licence.
+      // This code is used under the terms of the MIT licence.
       // https://opensource.org/licenses/MIT
       // Refer to Stackoverflow guidelines
       // https://meta.stackexchange.com/questions/271080/the-mit-license-clarity-on-using-code-on-stack-overflow-and-stack-exchange/271113#271113
