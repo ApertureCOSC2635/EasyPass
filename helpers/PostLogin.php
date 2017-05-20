@@ -53,6 +53,7 @@
                $_SESSION['login'] = $this->email;
                $_SESSION['mobile'] = $this->mobile;
                $_SESSION['sms'] = bin2hex(openssl_random_pseudo_bytes('4'));
+               $_SESSION['error'] = "";
                $message = "Your SMS code is ".$_SESSION['sms'];
                $sms = new TelstraSMS($this->TELSTRA_KEY, $this->TELSTRA_SECRET, $this->mobile, $message);
                $sms->send();
@@ -70,6 +71,7 @@
             $sms->send();
             $_SESSION['new'] = $this->email;
             $_SESSION['mobile'] = $this->mobile;
+            $_SESSION['error'] = "";
          }
          // Return to the application
          header('Location: /');
