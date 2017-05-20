@@ -1,0 +1,29 @@
+Import note these instructions are for Windows systems only!
+
+Step 1 - download XAMPP and install
+Step 2 - download Easypass from GIT or otherwise from the *.zip
+Step 3 - Copy contents of easypass into C:/XAMPP/htdocs
+Step 4A - If you cloned it from GIT duplicate db.config.example as db.config
+Step 4B - update db.config with the following details:
+	    - name = "easypass"
+	    - host = "localhost"
+	    - username = "root"  
+	    - password = "" # (XAMPP configured no password by default!)
+step 4C - if you are using the zip file it has a preconfigured db.config file for XAMPP
+
+step 5 - go to http://localhost/phpmyadmin/
+Step 6 - create easypass database
+Step 7 - select easypass DB and select the import tab 
+Step 8 - import "easypass.sql" from C:/xampp/htdocs/
+
+step 9 - go to http://localhost/
+step 10 - you now have a local instance of easypass running on your machine!
+
+If you are using Linux or MacOS you are on your own but you will need:
+1. Apache
+2. MySQL
+3. PHP 5.6
+4. php5-curl
+So, build your LAMP stack, copy or clone Easypass, import the db, update DB config and away you go.
+
+ 

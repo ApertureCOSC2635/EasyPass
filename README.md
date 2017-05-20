@@ -14,7 +14,7 @@ Ubuntu 14.04,  MySQL 5.6 or later, Apache2, PHP
 ### Installing
 1.	Install Lamp Stack in Ubuntu 14.04:
 
-Install apache: 
+Install apache:
 sudo apt-get update
 sudo apt-get install apache2
 
@@ -24,7 +24,7 @@ sudo mysql_install_db
 sudo mysql_secure_installation
 
 Install PHP:
-sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt
+sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt php5-curl
 
 Edit dir.conf to to request PHP first:
 sudo nano /etc/apache2/mods-enabled/dir.conf
@@ -36,13 +36,16 @@ sudo service apache2 restart
 
 Install PHP modules as required.
 
-2.	Copy All files to the webserver directory. 
+2.	Copy All files to the webserver directory.
 
 4.	Create the MySQL Database:
 
 create database easypass;
 
-## Test that the server is working correctly 
+5. If you are to time poor to do all of the above (eg RMIT staff) then you can
+run it in XAMPP for Windows, following the instructions in XAMPP.txt
+
+## Test that the server is working correctly
 
 Run the application from a web browser to ensure that everything is working correctly.
 
