@@ -42,7 +42,7 @@ Install PHP modules as required.
 
 create database easypass;
 
-5. If you are to time poor to do all of the above (eg RMIT staff) then you can
+5. If you are too time poor to do all of the above (eg RMIT staff) then you can
 run it in XAMPP for Windows, following the instructions in XAMPP.txt
 
 ## Test that the server is working correctly
