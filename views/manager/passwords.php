@@ -3,7 +3,7 @@
    $p = new Passwords;
    $passwords = $p->getPasswords($_SESSION['login']);
  ?>
-<form method="post" id="new_password" action="helpers/PostPassword.php" class="row hidden">
+<form method="post" id="new_password" action="helpers/PostPassword.php" class="row hidden" autocomplete="off">
    <div class="col-md-11">
       <h4>Add a new password or private data.</h4>
    </div>
@@ -27,7 +27,7 @@
    <div class="pull-right"><p><button class="btn btn-success" type="submit" role="button" id="button" >Save</button></p></div>
 </form>
 
-<form method="post" id="update_form" action="helpers/UpdatePassword.php" class="row hidden">
+<form method="post" id="update_form" action="helpers/UpdatePassword.php" class="row hidden" autocomplete="off">
    <div class="col-md-11">
       <h4>Update existing password or private data.</h4>
    </div>
