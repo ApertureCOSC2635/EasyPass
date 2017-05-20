@@ -1,5 +1,5 @@
 # Make a copy of this file and name it db.config. Git will ignore this file by default. Fill out the below array with the easy pass database credentials.
-#Remove commnets before use!
+# Remove commnets before use!
 <?php
    return (object) array(
       'name' => 'db name',
