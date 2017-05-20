@@ -1,29 +1,34 @@
-Import note these instructions are for Windows systems only!
+Important note these instructions are for Windows systems only!
+Tested with XAMPP 5.6.30 and Windows 10 Creators update
 
-Step 1 - download XAMPP and install
-Step 2 - download Easypass from GIT or otherwise from the *.zip
-Step 3 - Copy contents of easypass into C:/XAMPP/htdocs
-Step 4A - If you cloned it from GIT duplicate db.config.example as db.config
+Step 1 - Download XAMPP and install (https://www.apachefriends.org/index.html) (Tested with )
+Step 2 - Download Easypass from GIT (https://github.com/ApertureCOSC2635/EasyPass)
+or otherwise copy from the *.zip included in the assignment submission
+Step 3 - Copy contents of EasyPass into C:/XAMPP/htdocs (do not purge directory beforehand!)
+Step 4A - If you cloned it from GIT duplicate C:/XAMPP/htdocs/db.config.example as db.config
 Step 4B - update db.config with the following details:
+      - delete the comments!
 	    - name = "easypass"
 	    - host = "localhost"
-	    - username = "root"  
-	    - password = "" # (XAMPP configured no password by default!)
+	    - username = "root"
+	    - password = "" # (XAMPP is configured no password by default!)
 step 4C - if you are using the zip file it has a preconfigured db.config file for XAMPP
 
-step 5 - go to http://localhost/phpmyadmin/
-Step 6 - create easypass database
-Step 7 - select easypass DB and select the import tab 
-Step 8 - import "easypass.sql" from C:/xampp/htdocs/
+step 5 - Go to http://localhost/phpmyadmin/
+Step 6 - Create easypass database
+Step 7 - Select easypass DB and select the import tab
+Step 8 - Import "easypass.sql" from C:/xampp/htdocs/
 
-step 9 - go to http://localhost/
-step 10 - you now have a local instance of easypass running on your machine!
+step 9 - Go to http://localhost/
+step 10 - You now have a local instance of EasyPass running on your machine!
 
 If you are using Linux or MacOS you are on your own but you will need:
 1. Apache
 2. MySQL
 3. PHP 5.6
 4. php5-curl
-So, build your LAMP stack, copy or clone Easypass, import the db, update DB config and away you go.
+Also, XAMPP is available for Linux and MacOS. Go nuts!
 
- 
+See README.md for Ubuntu instructions!
+So, build your LAMP stack, copy or clone Easypass, import the db,
+update DB config and away you go.
